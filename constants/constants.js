@@ -1,10 +1,10 @@
 const { default: Decimal } = require("decimal.js");
 
 module.exports.OPERAND_TYPE = {
-    RELATIONAL,
-    ARITHEMATIC,
-    RAW_VALUE,
-    BIO_MARKER
+    RELATIONAL: "RELATIONAL",
+    ARITHEMATIC: "ARITHEMATIC",
+    RAW_VALUE: "RAW_VALUE",
+    BIO_MARKER: "BIO_MARKER"
 };
 
 module.exports.ARITHEMATIC_OPERATORS = {

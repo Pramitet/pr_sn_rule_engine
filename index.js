@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
-const { MongoClient, ObjectId } = require('mongodb');
+const mongoose = require('mongoose');
 const router = require('./routes/api');
 
 const app = express();
@@ -15,12 +15,11 @@ app.use(morgan('dev'));
 let db;
 
 // Connect to MongoDB
-MongoClient.connect(process.env.MONGO_URI, {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-.then(client => {
-  db = client.db(); // default db from URI
+.then(() => {
   console.log('Oh Thank God MongoDB is connected 🎉');
 
   // Start server after DB connects
