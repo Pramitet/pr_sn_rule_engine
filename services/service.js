@@ -13,7 +13,7 @@ async function computeRisk(userId, conditionId, force = false) {
       conditionId: conditionId,
       depreciated: false,
     })?.lean();
-    if (riskFactor) {
+    if (dbRiskFactor) {
       return {
         riskFactor: dbRiskFactor.value,
         version: dbRiskFactor.version,
@@ -155,12 +155,12 @@ biomarkers => {
         biomarker1: {
             value: "",
             timestamp: "",
-            report_id: ""
+            report: ""
         },
         biomarker2: {
             value: "",
             timestamp: "",
-            report_id: ""
+            report: ""
         }
     }
 

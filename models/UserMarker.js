@@ -18,7 +18,7 @@ UserMarkers would look like
         biomarker1: [{
             Value: “”
 			timestamp: “”
-			report_id: “
+			report: “
         }]
     },
     biomarker1: "value",

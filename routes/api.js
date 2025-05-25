@@ -5,9 +5,15 @@ const {
   addUpdateBiomarker,
   computeRiskPostResponse,
 } = require("../services/service");
+const validate = require("../middleware/validate");
+const {
+  userBiomarkersSchema,
+  computeRiskSchema,
+  conditionSchema,
+} = require("../validators/inputValidations");
 const router = express.Router();
 
-router.post("/compute-risk", async (req, res) => {
+router.post("/compute-risk", validate(computeRiskSchema), async (req, res) => {
   try {
     const result = await computeRisk(
       req.body.userId,
@@ -18,7 +24,7 @@ router.post("/compute-risk", async (req, res) => {
       .status(200)
       .json({ riskFactor: result.riskFactor, version: result.version });
 
-    // This could be done asynchrously via a Kafka but this also does the same  
+    // This could be done asynchrously via a Kafka but this also does the same
     if (!result.cached) {
       await computeRiskPostResponse(
         result.userId,
@@ -35,9 +41,9 @@ router.post("/compute-risk", async (req, res) => {
   }
 });
 
-router.post("/add-condition", async (req, res) => {
+router.post("/add-condition", validate(conditionSchema), async (req, res) => {
   try {
-    const result = await addUpdateCondition(
+    await addUpdateCondition(
       req.body.id,
       req.body.name,
       req.body.version,
@@ -52,18 +58,22 @@ router.post("/add-condition", async (req, res) => {
   }
 });
 
-router.post("/add-biomarker", async (req, res) => {
-  try {
-    const result = await addUpdateBiomarker(
-      req.body.userId,
-      req.body.biomarkers
-    );
-    res.status(200).json({ success: true });
-  } catch (err) {
-    res
-      .status(err.statusCode ?? 500)
-      .json({ error: "Invalid data " + err.message.toString() });
+router.post(
+  "/add-biomarker",
+  validate(userBiomarkersSchema),
+  async (req, res) => {
+    try {
+      await addUpdateBiomarker(
+        req.body.userId,
+        req.body.biomarkers
+      );
+      res.status(200).json({ success: true });
+    } catch (err) {
+      res
+        .status(err.statusCode ?? 500)
+        .json({ error: "Invalid data " + err.message.toString() });
+    }
   }
-});
+);
 
 module.exports = router;
