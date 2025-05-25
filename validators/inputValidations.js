@@ -2,6 +2,7 @@ const Joi = require("joi");
 const {
   ARITHEMATIC_OPERATORS,
   RELATIONAL_OPERATORS,
+  OPERAND_TYPE,
 } = require("../constants/constants");
 
 const biomarkerEntrySchema = Joi.object({
@@ -27,44 +28,43 @@ const computeRiskSchema = Joi.object({
   force: Joi.bool().optional(),
 });
 
-//Setting max depth as 5 for now in the recursive call
 const createOperandSchemaWithDepth = (maxDepth = 5) => {
   const createSchema = (depth) => {
     if (depth <= 0) {
       // Base case: Either should be BIO_MARKER", "RAW_VALUE
       return Joi.object({
-        type: Joi.string().valid("BIO_MARKER", "RAW_VALUE").required(),
+        type: Joi.string().valid(OPERAND_TYPE.BIO_MARKER, OPERAND_TYPE.RAW_VALUE).required(),
         value: Joi.string().required(),
       }).strict(true);
     }
 
     return Joi.object({
       type: Joi.string()
-        .valid("BIO_MARKER", "RAW_VALUE", "ARITHEMATIC", "RELATIONAL")
+        .valid(...Object.values(OPERAND_TYPE))
         .required(),
 
       value: Joi.alternatives().conditional("type", {
         switch: [
-          { is: "BIO_MARKER", then: Joi.string().required() },
-          { is: "RAW_VALUE", then: Joi.string().required() },
-          { is: "RELATIONAL", then: Joi.string().required() },
-          { is: "ARITHEMATIC", then: Joi.forbidden() },
+          { is: OPERAND_TYPE.BIO_MARKER, then: Joi.string().required() },
+          { is: OPERAND_TYPE.RAW_VALUE, then: Joi.string().required() },
+          { is: OPERAND_TYPE.RELATIONAL, then: Joi.string().required() },
+          { is: OPERAND_TYPE.ARITHEMATIC, then: Joi.forbidden() },
         ],
         otherwise: Joi.any().forbidden(),
       }),
 
       left: Joi.alternatives().conditional("type", {
         switch: [
-          { is: "ARITHEMATIC", then: createSchema(depth - 1).required() },
-          { is: "RELATIONAL", then: createSchema(depth - 1).required() },
+          { is: OPERAND_TYPE.ARITHEMATIC, then: createSchema(depth - 1).required() },
+          { is: OPERAND_TYPE.RELATIONAL, then: createSchema(depth - 1).required() },
         ],
         otherwise: Joi.any().forbidden(),
       }),
 
       right: Joi.alternatives().conditional("type", {
         switch: [
-          { is: "ARITHEMATIC", then: createSchema(depth - 1).required() },
-          { is: "RELATIONAL", then: createSchema(depth - 1).required() },
+          { is: OPERAND_TYPE.ARITHEMATIC, then: createSchema(depth - 1).required() },
+          { is: OPERAND_TYPE.RELATIONAL, then: createSchema(depth - 1).required() },
         ],
         otherwise: Joi.any().forbidden(),
       }),
@@ -72,13 +72,13 @@ const createOperandSchemaWithDepth = (maxDepth = 5) => {
       operator: Joi.when("type", {
         switch: [
           {
-            is: "ARITHEMATIC",
+            is: OPERAND_TYPE.ARITHEMATIC,
             then: Joi.string()
               .valid(...Object.values(ARITHEMATIC_OPERATORS))
               .required(),
           },
           {
-            is: "RELATIONAL",
+            is: OPERAND_TYPE.RELATIONAL,
             then: Joi.string()
               .valid(...Object.values(RELATIONAL_OPERATORS))
               .required(),
@@ -91,10 +91,11 @@ const createOperandSchemaWithDepth = (maxDepth = 5) => {
   return createSchema(maxDepth);
 };
 
-const operandSchema = createOperandSchemaWithDepth();
+//Setting max depth as 5 for now in the recursive call
+const operandSchema = createOperandSchemaWithDepth(5);
 
 const ruleSchema = Joi.object({
-  type: Joi.string().valid("RELATIONAL").required(), // In the rules tree, the first object will always be Relational
+  type: Joi.string().valid(OPERAND_TYPE.RELATIONAL).required(), // In the rules tree, the first object will always be Relational
   left: operandSchema.required(), // Relational type will always have left, right, operator and value
   right: operandSchema.required(),
   operator: Joi.string()
