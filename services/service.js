@@ -10,9 +10,10 @@ async function computeRisk(userId, conditionId, force = false) {
 
     if (!force) {
         const riskFactor = LastComputed.find({userId: userId, conditionId: conditionId})?.lean();
-        if (riskFactor) {
+        if (riskFactor && !riskFactor.depreciated) {
             return riskFactor;
         }
+
     }
 
     const condition = await Conditioins.find({conditionId: conditionId})?.lean();
@@ -27,9 +28,24 @@ async function computeRisk(userId, conditionId, force = false) {
     }
 
     const riskFactor = evaluateRules(condition.rules, userMarker, ZERO)?.toString() || '0';
+
+    await LastComputed.findOneAndUpdate({
+        userId: userId,
+        conditionId: conditionId
+    }, {
+        $set: {
+            ...userMarker,
+            userId: userId,
+            conditionId: conditionId,
+            value: riskFactor,
+            depreciated: false
+        }
+    }, {
+        upsert: true
+    });
+
     return riskFactor;
 }
-
 
 module.exports = {
     computeRisk

@@ -5,7 +5,8 @@ const lastComputedSchema = new mongoose.Schema({
   userId: String,
   conditionId: String,
   data_used: Schema.Types.Mixed,
-  value: String
+  value: String,
+  depreciated: Boolean
 }, {strict: false});
 
 module.exports = mongoose.model('LastComputed', lastComputedSchema);
@@ -19,6 +20,7 @@ module.exports = mongoose.model('LastComputed', lastComputedSchema);
         biomarker2: value
     }
     value: String
+    depreciated: Boolean
 
 */
 
