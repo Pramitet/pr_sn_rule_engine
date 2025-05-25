@@ -1,0 +1,26 @@
+{
+  "name": "pr_sn_rule_engine",
+  "version": "1.0.0",
+  "description": "A Rule Engine project created for a job interview",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pramitet/pr_sn_rule_engine.git"
+  },
+  "author": "Pramithi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pramitet/pr_sn_rule_engine/issues"
+  },
+  "homepage": "https://github.com/Pramitet/pr_sn_rule_engine#readme",
+  "dependencies": {
+    "decimal.js": "^10.5.0",
+    "express": "^5.1.0",
+    "mongodb": "^6.16.0",
+    "moongose": "^1.0.0",
+    "morgan": "^1.10.0"
+  }
+}
