@@ -1,0 +1,290 @@
+{
+	"info": {
+		"_postman_id": "1a91a837-aa4d-4c87-86da-f3b00706ee95",
+		"name": "Project Seretonin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45299899",
+		"_collection_link": "https://pramithi.postman.co/workspace/Pramithi's-Workspace~b5688bef-f660-44e5-8224-c1dc2780d66c/collection/45299899-1a91a837-aa4d-4c87-86da-f3b00706ee95?action=share&source=collection_link&creator=45299899"
+	},
+	"item": [
+		{
+			"name": "Add Biomarker",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": \"TestUser\",\n    \"biomarkers\": {\n        \"blood_glucose\": {\n            \"value\": \"150\",\n            \"timestamp\": \"2024-05-01T12:00:00Z\",\n            \"report\": \"report_001\"\n        },\n        \"HbA1c\": {\n            \"value\": \"6.6\",\n            \"timestamp\": \"2024-05-01T12:00:00Z\",\n            \"report\": \"report_002\"\n        },\n        \"exercise_minutes\": {\n            \"value\": \"30\",\n            \"timestamp\": \"2024-05-01T12:00:00Z\",\n            \"report\": \"report_003\"\n        },\n        \"sleep_hours\": {\n            \"value\": \"7\",\n            \"timestamp\": \"2024-05-01T12:00:00Z\",\n            \"report\": \"report_004\"\n        },\n        \"parent_with_diabetes\": {\n            \"value\": \"1\",\n            \"timestamp\": \"2024-05-01T12:00:00Z\",\n            \"report\": \"report_005\"\n        }\n        \n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/add-biomarker",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"add-biomarker"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"TestUser\",\n    \"biomarkers\": {\n        \"blood_glucose\": {\n            \"value\": \"150\",\n            \"timestamp\": \"2024-05-01T12:00:00Z\",\n            \"report\": \"report_001\"\n        },\n        \"HbA1c\": {\n            \"value\": \"6.6\",\n            \"timestamp\": \"2024-05-01T12:00:00Z\",\n            \"report\": \"report_002\"\n        },\n        \"exercise_minutes\": {\n            \"value\": \"30\",\n            \"timestamp\": \"2024-05-01T12:00:00Z\",\n            \"report\": \"report_003\"\n        },\n        \"sleep_hours\": {\n            \"value\": \"7\",\n            \"timestamp\": \"2024-05-01T12:00:00Z\",\n            \"report\": \"report_004\"\n        },\n        \"parent_with_diabetes\": {\n            \"value\": \"1\",\n            \"timestamp\": \"2024-05-01T12:00:00Z\",\n            \"report\": \"report_005\"\n        }\n        \n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/add-biomarker",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"add-biomarker"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "16"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"10-oV4hJxRVSENxc/wX8+mA4/Pe4tA\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 25 May 2025 21:03:56 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true\n}"
+				}
+			]
+		},
+		{
+			"name": "Add Condition",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"cond_001\",\n    \"name\": \"cardiovascular_disease_risk\",\n    \"version\": \"3\",\n    \"latest\": true,\n    \"rules\": [\n        {\n            \"type\": \"RELATIONAL\",\n            \"left\": {\n                \"type\": \"BIO_MARKER\",\n                \"value\": \"blood_glucose\"\n            },\n            \"right\": {\n                \"type\": \"RAW_VALUE\",\n                \"value\": \"140\"\n            },\n            \"operator\": \">\",\n            \"value\": \"20\"\n        },\n        {\n            \"type\": \"RELATIONAL\",\n            \"left\": {\n                \"type\": \"BIO_MARKER\",\n                \"value\": \"HbA1c\"\n            },\n            \"right\": {\n                \"type\": \"RAW_VALUE\",\n                \"value\": \"6.5\"\n            },\n            \"operator\": \">\",\n            \"value\": \"25\"\n        },\n        {\n            \"type\": \"RELATIONAL\",\n            \"left\": {\n                \"type\": \"BIO_MARKER\",\n                \"value\": \"exercise_minutes\"\n            },\n            \"right\": {\n                \"type\": \"RAW_VALUE\",\n                \"value\": \"30\"\n            },\n            \"operator\": \">=\",\n            \"value\": \"-10\"\n        },\n        {\n            \"type\": \"RELATIONAL\",\n            \"left\": {\n                \"type\": \"ARITHEMATIC\",\n                \"left\": {\n                    \"type\": \"BIO_MARKER\",\n                    \"value\": \"sleep_hours\"\n                },\n                \"right\": {\n                    \"type\": \"BIO_MARKER\",\n                    \"value\": \"parent_with_diabetes\"\n                },\n                \"operator\": \"+\"                \n            },\n            \"right\": {\n                \"type\": \"RAW_VALUE\",\n                \"value\": \"8\"\n            },\n            \"operator\": \">=\",\n            \"value\": \"-20\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/add-condition",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"add-condition"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "201",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"cond_001\",\n    \"name\": \"cardiovascular_disease_risk\",\n    \"version\": \"3\",\n    \"latest\": true,\n    \"rules\": [\n        {\n            \"type\": \"RELATIONAL\",\n            \"left\": {\n                \"type\": \"BIO_MARKER\",\n                \"value\": \"blood_glucose\"\n            },\n            \"right\": {\n                \"type\": \"RAW_VALUE\",\n                \"value\": \"140\"\n            },\n            \"operator\": \">\",\n            \"value\": \"20\"\n        },\n        {\n            \"type\": \"RELATIONAL\",\n            \"left\": {\n                \"type\": \"BIO_MARKER\",\n                \"value\": \"HbA1c\"\n            },\n            \"right\": {\n                \"type\": \"RAW_VALUE\",\n                \"value\": \"6.5\"\n            },\n            \"operator\": \">\",\n            \"value\": \"25\"\n        },\n        {\n            \"type\": \"RELATIONAL\",\n            \"left\": {\n                \"type\": \"BIO_MARKER\",\n                \"value\": \"exercise_minutes\"\n            },\n            \"right\": {\n                \"type\": \"RAW_VALUE\",\n                \"value\": \"30\"\n            },\n            \"operator\": \">=\",\n            \"value\": \"-10\"\n        },\n        {\n            \"type\": \"RELATIONAL\",\n            \"left\": {\n                \"type\": \"ARITHEMATIC\",\n                \"left\": {\n                    \"type\": \"BIO_MARKER\",\n                    \"value\": \"sleep_hours\"\n                },\n                \"right\": {\n                    \"type\": \"BIO_MARKER\",\n                    \"value\": \"parent_with_diabetes\"\n                },\n                \"operator\": \"+\"                \n            },\n            \"right\": {\n                \"type\": \"RAW_VALUE\",\n                \"value\": \"8\"\n            },\n            \"operator\": \">=\",\n            \"value\": \"-20\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/add-condition",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"add-condition"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "16"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"10-oV4hJxRVSENxc/wX8+mA4/Pe4tA\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 25 May 2025 21:16:52 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true\n}"
+				}
+			]
+		},
+		{
+			"name": "Compute Risk",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": \"TestUser\",\n    \"conditionId\": \"cond_001\",\n    \"force\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/compute-risk",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"compute-risk"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"TestUser\",\n    \"conditionId\": \"cond_001\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/compute-risk",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"compute-risk"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "18"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"12-+mrD/oJyZXh0SAdZBVzy7tbpnGs\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 25 May 2025 21:53:53 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"riskFactor\": \"0\"\n}"
+				}
+			]
+		}
+	]
+}
