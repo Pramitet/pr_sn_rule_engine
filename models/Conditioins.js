@@ -11,6 +11,19 @@ const conditionSchema = new mongoose.Schema({
 module.exports = mongoose.model('Condition', conditionSchema);
 
 
+// Stores Conditions
+// Assuming the root of the rule will always be a relation operator or a raw value...
+// Can do four types of operations
+//     1) RAW_VALUE -> Just a harcoded value
+//     2) BIO_MARKER -> Get the relevant BIO_MARKER Data of the user
+//     3) ARITHEMATIC -> Used for doing some arthimatic opertions form given values.
+//                       There might be a spelling mistake, but I have in too deep to correct it. 
+//     4) RELATIONAL  -> Used for conditions...
+
+
+// RELATIONAL and ARITHEMATIC types whould have left and right used to indicate operands, which can be either of the four discussed values
+
+
 /*
 
 A condtion would look like

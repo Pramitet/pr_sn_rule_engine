@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
+
+//This is for storing all the computes which were previously done for users against a condition
+//This stores the data used, version of the condition's rule which was used and the computed risk
+
 const ComputeHistorySchema = new mongoose.Schema({
   userId: Schema.Types.String,
   conditionId: Schema.Types.String,

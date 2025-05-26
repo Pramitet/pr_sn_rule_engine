@@ -12,6 +12,9 @@ const lastComputedSchema = new mongoose.Schema({
 
 module.exports = mongoose.model('LastComputed', lastComputedSchema);
 
+// Stores the last computed risk factor for the user agaist a condition
+// Stored in a sepereate collection as it can be fetched quicker
+
 /* This would look like
 
     userId: String,
@@ -21,7 +24,8 @@ module.exports = mongoose.model('LastComputed', lastComputedSchema);
         biomarker2: value
     }
     value: String
-    depreciated: Boolean
+    depreciated: Boolean --> This is important if this is true, we need to calculate a new risk value
+                             Will be changed to true, when a biomarker/condition is added/updated.
 
 */
 
